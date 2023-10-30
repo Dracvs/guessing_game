@@ -1,9 +1,18 @@
 use rand::Rng;
 use std::cmp::Ordering;
-use std::io;
+use std::io::{self};
 
 fn main() {
     
+    println!("
+        1. Guessing Game 
+        2. Variable Mutability
+        3. Shadowing
+        4. Arrays
+        5. Functions
+        6. More Functions
+        7. Return Value Functions");
+
     println!("Choose Activity: ");
 
     let mut activity = String::new();
@@ -27,6 +36,18 @@ fn main() {
     else if activity.trim().eq_ignore_ascii_case("4")
     {
         arrays();
+    }
+    else if activity.trim().eq_ignore_ascii_case("5")
+    {
+        functions();
+    }
+    else if activity.trim().eq_ignore_ascii_case("6")
+    {
+        more_functions();
+    }
+    else if activity.trim().eq_ignore_ascii_case("7")
+    {
+        return_value_functions();
     }
 }
 
@@ -115,4 +136,46 @@ fn arrays()
     let element = a[index];
 
     println!("The value of the element at index {index} is: {element}");
+}
+
+fn functions()
+{
+    println!("gimme a number");
+    let mut number = String::new();
+    
+    io::stdin()
+        .read_line(&mut number)
+        .expect("failed to read line"); 
+
+    let number: i32 = match number.trim().parse(){
+        Ok(num) => num,
+        Err(_) => 0
+    };
+
+    another_function(number);
+}
+
+fn another_function(x : i32)
+{
+    println!("The passed value of x is {x}");
+}
+
+fn more_functions()
+{
+    print_labeled_measurement(5, 'h');
+}
+
+fn print_labeled_measurement(value: i32, unit_label: char)
+{
+    println!("The Measurement is: {value}{unit_label}");
+}
+
+fn return_value_functions()
+{
+    println!("The returnal value functons is {}", returnal_value_function());
+}
+
+fn returnal_value_function() -> i32
+{
+    5
 }
