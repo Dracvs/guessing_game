@@ -1,6 +1,6 @@
 use rand::Rng;
 use std::cmp::Ordering;
-use std::io::{self};
+use std::io::{self, stdin};
 
 fn main() {
     
@@ -11,7 +11,10 @@ fn main() {
         4. Arrays
         5. Functions
         6. More Functions
-        7. Return Value Functions");
+        7. Return Value Functions
+        8. Loops!
+        9. The Farehnheit Anxiom
+        10. the Celsius Problem");
 
     println!("Choose Activity: ");
 
@@ -48,6 +51,18 @@ fn main() {
     else if activity.trim().eq_ignore_ascii_case("7")
     {
         return_value_functions();
+    }
+    else if activity.trim().eq_ignore_ascii_case("8")
+    {
+        loops();
+    }
+    else if activity.trim().eq_ignore_ascii_case("9")
+    {
+
+    }
+    else if activity.trim().eq_ignore_ascii_case("10")
+    {
+        from_celsius_to_fahrenheit();
     }
 }
 
@@ -177,5 +192,55 @@ fn return_value_functions()
 
 fn returnal_value_function() -> i32
 {
-    5
+    return rand::thread_rng().gen_range(1..=10);
+}
+
+fn loops()
+{
+
+}
+
+fn from_fahrenheit_to_celsius()
+{
+
+}
+
+fn from_celsius_to_fahrenheit()
+{
+    println!("Input Celcius degrees: ");
+
+    let celsius = capture_input();
+
+    let celsius = string_to_float(celsius);
+
+    let fahrenheit = (celsius * 9.0/5.0) + 32.0;
+    println!("{celsius} celsius makes {fahrenheit} fahrenheit");
+}
+
+
+fn capture_input() -> String
+{
+    let mut inputText = String::new(); 
+    io::stdin()
+        .read_line(&mut inputText)
+        .expect("Could not read line");
+    return inputText;
+}
+
+fn string_to_integer(text: String) -> i32
+{
+    let number = match text.trim().parse(){
+        Ok(num)=> num,
+        Err(_) => 0  
+    };
+    return number;
+}
+
+fn string_to_float(text: String)->f32
+{
+    let number = match text.trim().parse(){
+        Ok(num) => num,
+        Err(_) => 0.0
+    };
+    return number;
 }
