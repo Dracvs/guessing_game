@@ -58,7 +58,7 @@ fn main() {
     }
     else if activity.trim().eq_ignore_ascii_case("9")
     {
-
+        from_fahrenheit_to_celsius();
     }
     else if activity.trim().eq_ignore_ascii_case("10")
     {
@@ -202,7 +202,11 @@ fn loops()
 
 fn from_fahrenheit_to_celsius()
 {
-
+    println!("Input Fahrenheit degrees: ");
+    let fahrenheit = capture_input();
+    let fahrenheit = string_to_float(fahrenheit);
+    let celsius  = (fahrenheit - 32.0) * 5.0/9.0;
+    println!("{fahrenheit} fahrenheit makes {celsius} celsius");
 }
 
 fn from_celsius_to_fahrenheit()
@@ -220,11 +224,11 @@ fn from_celsius_to_fahrenheit()
 
 fn capture_input() -> String
 {
-    let mut inputText = String::new(); 
+    let mut input_text = String::new(); 
     io::stdin()
-        .read_line(&mut inputText)
+        .read_line(&mut input_text)
         .expect("Could not read line");
-    return inputText;
+    return input_text;
 }
 
 fn string_to_integer(text: String) -> i32
