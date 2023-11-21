@@ -1,6 +1,6 @@
 use rand::Rng;
 use std::cmp::Ordering;
-use std::io::{self, stdin};
+use std::io::{self};
 
 fn main() {
     
@@ -14,7 +14,11 @@ fn main() {
         7. Return Value Functions
         8. Loops!
         9. The Farehnheit Anxiom
-        10. the Celsius Problem");
+        10. the Celsius Problem
+        11. Borrow Checker Princples
+        12. String Slices
+        13. Actual String Slices Implementation
+        14. Pointer Sizes");
 
     println!("Choose Activity: ");
 
@@ -63,6 +67,42 @@ fn main() {
     else if activity.trim().eq_ignore_ascii_case("10")
     {
         from_celsius_to_fahrenheit();
+    }
+    else if activity.trim().eq_ignore_ascii_case("11")
+    {
+        borrow_checker();
+    }
+    else if activity.trim().eq_ignore_ascii_case("12")
+    {
+        string_slices();
+    }
+    else if activity.trim().eq_ignore_ascii_case("13")
+    {
+        let salute: String = String::from("Royal Salute!");
+	    // `string_slices_actual_impl` works on slices of 
+        // `String`s whether partial or whole
+
+        let word = string_slices_actual_impl(&salute[0..6]);
+        let word = string_slices_actual_impl(&salute[..]);
+
+        // `string_slices_actual_impl` also works on references to `String`
+        // which are equivalente to whole slices of `String`s
+        let word = string_slices_actual_impl(&salute);
+
+        let salute_literal = "Royal Salutation!";
+
+        // `string_slices_actual_impl` works on slices of string literals
+        // whether partial or whole
+        let word = string_slices_actual_impl(&salute_literal[0..6]);
+        let word = string_slices_actual_impl(&salute_literal[..]);
+
+        // Because string literals *are* string slices already,
+        // this works too, without the slice syntax!
+
+        string_slices_actual_impl(salute_literal);
+    }
+    else if activity.trim().eq_ignore_ascii_case("14") {
+        check_pointer_sizes();
     }
 }
 
@@ -200,6 +240,19 @@ fn loops()
 
 }
 
+fn borrow_checker()
+{
+    let m1 = String::from("The World");
+    let m2 = String::from(" is on fire");
+    greet(&m1, &m2);
+    let _s = format!("{} {}!", m1, m2);
+}
+
+fn greet(g1: &String, g2: &String)
+{
+    println!("{}{}", g1, g2);
+}
+
 fn from_fahrenheit_to_celsius()
 {
     println!("Input Fahrenheit degrees: ");
@@ -247,4 +300,37 @@ fn string_to_float(text: String)->f32
         Err(_) => 0.0
     };
     return number;
+}
+
+fn string_slices()
+{
+    let mut s = String::from("hello");
+    let hello: &str = &s[0..5];  
+    // This won't compile if placed here: 
+    //s.push_str(" World");  
+    println!("{hello}");
+    s.push_str(" World");
+    
+}
+
+fn string_slices_actual_impl(s: &str) -> &str
+{
+    let bytes = s.as_bytes();
+
+    for(i, &item) in bytes.iter().enumerate()
+    {
+        if item == b' '{
+            return &s[0..i];
+        }
+    }
+    &s[..]
+}
+
+fn check_pointer_sizes()
+{
+    println!(
+        "&String={} &str={}",
+        std::mem::size_of::<&String>(),
+        std::mem::size_of::<&str>()
+    )
 }
